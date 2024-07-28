@@ -54,28 +54,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: Dodge
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: dfb49f11f1ce6cd43abda1c34a3661cc, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.23504275
-        functionName: UnAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: dfb49f11f1ce6cd43abda1c34a3661cc, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.97489315
-        functionName: UnDodge
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: dfb49f11f1ce6cd43abda1c34a3661cc, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

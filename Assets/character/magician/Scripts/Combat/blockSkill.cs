@@ -1,31 +1,46 @@
 using UnityEngine;
 
-public class blockSkill : MonoBehaviour
+public class blockSkill : CharacterState
 {
-    public GameObject _shieldBlue;
-    Combat combat;
-   InputManager inputManager;
-    private void Awake()
-    {
-        _shieldBlue = this.gameObject.transform.GetChild(0).gameObject;
-        inputManager = GetComponent<InputManager>();
-        combat = GetComponent<Combat>();
-        _shieldBlue.SetActive(false);
+    public blockSkill(MagicianChar magicianChar) : base(magicianChar) { }
 
-    }
-    public void BlockSkill()
+    public override void EnterState()
     {
-        if (!inputManager.isDodge && !combat.isAttack && !inputManager.isFlameFire)
-        {
-            if (inputManager.isBlock) _shieldBlue.SetActive(true);
-            else _shieldBlue.SetActive(false);
-        }
-        else
-        {
-            _shieldBlue.SetActive(false);
-        }
-        
-        
-       
+        MagicianChar.ShieldObject.SetActive(true);
+        MagicianChar.anim.SetBool("Block", true);
+        MagicianChar.MoveInfor = 0;
     }
+
+    
+    public override void UpdateState()
+    {
+       
+        MagicianChar.Locomotion.RotateToCamera();
+
+        if(MagicianChar.InputManager.isDodge)
+        {
+            MagicianChar.TransitionToState(MagicianChar.dodgeState);
+        }
+        else if(MagicianChar.InputManager.isAttack) MagicianChar.TransitionToState(MagicianChar.attackState);
+        else if(MagicianChar.InputManager.isFlame) MagicianChar.TransitionToState(MagicianChar.flameState);
+        else if(MagicianChar.InputManager.isBlock == false)
+        {
+            if (MagicianChar.InputManager.isMoving)
+            {
+                MagicianChar.TransitionToState(MagicianChar.moveState);
+            }
+            else
+            {
+                MagicianChar.TransitionToState(MagicianChar.idleState);
+            }
+        }
+    }
+    public override void ExitState()
+    {
+        MagicianChar.ShieldObject.SetActive(false);
+        MagicianChar.InputManager.isBlock = false;
+
+        MagicianChar.anim.SetBool("Block", false);
+    }
+
 }

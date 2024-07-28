@@ -984,16 +984,7 @@ PrefabInstance:
       addedObject: {fileID: 727556834}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 727556833}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 727556836}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 727556838}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 727556840}
     - targetCorrespondingSourceObject: {fileID: 3135921509060577837, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
       insertIndex: -1
       addedObject: {fileID: 808003959}
@@ -1103,12 +1094,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108ebf4a36d463941b2d3ef48d9eb0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFlameFire: 0
   horizontalInput: 0
   verticalInput: 0
+  isMoving: 0
   isDodge: 0
+  isAttack: 0
+  isFlame: 0
   isBlock: 0
---- !u!114 &727556833
+--- !u!114 &727556834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650530325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7945d533c4ae2964eb6e3e2ee1143935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  InputManager: {fileID: 0}
+  Locomotion: {fileID: 0}
+  MoveInfor: 0
+  timeDodge: 0
+  acceleration: 1.2
+  timeFireBall: 1.5
+  timeFlame: 0
+--- !u!114 &727556836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1122,66 +1135,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  ForceDodge: 170
+  walkSpeed: 100
+  runSpeed: 200
   rotationSpeed: 5
   isCursorlock: 1
   Cinemachine: {fileID: 0}
---- !u!114 &727556834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650530325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7945d533c4ae2964eb6e3e2ee1143935, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &727556836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650530325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002e017abb5af414bb0509b831dc0d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &727556838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650530325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1c825d7070c6e747b631b87e120c1a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shieldBlue: {fileID: 0}
---- !u!114 &727556840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650530325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfb49f11f1ce6cd43abda1c34a3661cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ForceDogde: 5
-  dodgeDuration: 1
-  isDodging: 0
-  isAttack: 0
-  AttackType: 0
-  FireBall: {fileID: 3795720787573995811, guid: da0acea19b4e26c43a46b7a180dd8c2a, type: 3}
-  FireBallSpeed: 10000
-  FireFlameObject: {fileID: 0}
 --- !u!1 &801200633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,7 +1973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336337190285436941, guid: e89c262214b79904393000118558ba93, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

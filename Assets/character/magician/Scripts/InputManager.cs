@@ -4,24 +4,22 @@ using UnityEngine.InputSystem.Interactions;
 public class InputManager : MonoBehaviour
 {
     [Header("Class")]
-    AnimatiorManager animatiorManager;
+  
     PlayerControl playerControls;
-    PlayerLocomotion locomotion;
-    Combat combat;
+
     [Header("Input values")]
-    public bool isFlameFire;
     public Vector2 moverInput { get; private set; }
     public float horizontalInput;
     public float verticalInput;
+    public bool isMoving;
     public bool isDodge;
-    
+    public bool isAttack = false;
+    public bool isFlame = false;
     public bool isBlock;
     public bool Spirits { get; private set; }
     private void Awake()
     {
-        animatiorManager = GetComponent<AnimatiorManager>();
-        combat = GetComponent<Combat>();
-        locomotion = GetComponent<PlayerLocomotion>();
+      
 
 
     }
@@ -37,13 +35,11 @@ public class InputManager : MonoBehaviour
                 if (context.interaction is HoldInteraction)
                 {
                     Spirits = true;
-                    isFlameFire = false;
                 }
                 else if(context.interaction is TapInteraction)
                 {
                     isDodge = true;
-                    isFlameFire = false;
-                    combat.isAttack = false;
+                  
                 }
             };
             playerControls.Playermoverment.Spirit.canceled += context => Spirits = false;
@@ -51,7 +47,7 @@ public class InputManager : MonoBehaviour
             playerControls.Combat.block.canceled += context => isBlock = false;
             playerControls.Combat.NormalAttack.performed += OnAttack;
             playerControls.Other.Cursor.performed += Escap;
-            playerControls.Combat.NormalAttack.canceled += context => isFlameFire = false;
+            playerControls.Combat.NormalAttack.canceled += context => isFlame = false;
         }
         playerControls.Enable();
     }
@@ -69,53 +65,33 @@ public class InputManager : MonoBehaviour
     {
         verticalInput = moverInput.y;
         horizontalInput = moverInput.x;
+        if(verticalInput != 0 || horizontalInput != 0)
+        {
+            isMoving = true;
+        }
+        else isMoving = false;
       
     }
     private void Update()
     {
-        playerControls.Playermoverment.Spirit.performed += context =>
-        {
-            if (context.interaction is TapInteraction)
-            {
-                animatiorManager.PlayDodgeAnim();
-                isFlameFire = false;
-                //combat.Dodge();
-                
-            }
-
-                
-        };
+        
     }
    private void OnAttack (InputAction.CallbackContext context)
     {
-        if (!locomotion.isCursorlock) return;
-        if (context.interaction is TapInteraction)
+        if(context.interaction is HoldInteraction)
         {
-            animatiorManager.PlayNorAttack();
+            isFlame = true;
         }
-        else if(context.interaction is HoldInteraction)
+        else if(context.interaction is TapInteraction)
         {
-            isFlameFire = true;
-            isBlock = false;
+            isAttack = true;
         }
-       
         
         
         
     }
    void Escap(InputAction.CallbackContext context)
     {
-       if(locomotion.isCursorlock)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        isFlameFire = false;
-       locomotion.isCursorlock = !locomotion.isCursorlock;
+       
     }
 }

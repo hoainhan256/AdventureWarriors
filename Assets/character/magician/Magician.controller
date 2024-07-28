@@ -8,9 +8,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isDodge
-    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: flameFire
     m_EventTreshold: 0
@@ -38,9 +35,6 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: dodge
-    m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDodge
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7567097060575828156}
@@ -228,7 +222,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDodge
+    m_ConditionEvent: dodge
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7567097060575828156}
@@ -273,10 +267,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDodge
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7567097060575828156}
   m_Solo: 0
@@ -321,9 +312,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isDodge
-    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: isAttack
     m_EventTreshold: 0
@@ -657,22 +645,22 @@ AnimatorStateMachine:
     m_Position: {x: 490, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6269012237094588168}
-    m_Position: {x: -120, y: -110, z: 0}
+    m_Position: {x: -150, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1298396128919113005}
-    m_Position: {x: -150, y: -220, z: 0}
+    m_Position: {x: -150, y: -230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 146990131602845309}
-    m_Position: {x: -130, y: -170, z: 0}
+    m_Position: {x: -390, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8241883088921825170}
-    m_Position: {x: -130, y: -280, z: 0}
+    m_Position: {x: 180, y: -260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6396455264181997737}
-    m_Position: {x: 900, y: -180, z: 0}
+    m_Position: {x: 870, y: -150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7567097060575828156}
-    m_Position: {x: -130, y: -50, z: 0}
+    m_Position: {x: 140, y: 70, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -891,9 +879,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Block
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: isDodge
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1298396128919113005}
   m_Solo: 0
@@ -993,9 +978,6 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: dodge
-    m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDodge
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7567097060575828156}
@@ -1121,8 +1103,7 @@ AnimatorState:
   - {fileID: 8339008479677310236}
   - {fileID: -3970442550253886582}
   - {fileID: -8801984948300575243}
-  m_StateMachineBehaviours:
-  - {fileID: -944675184472877771}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
