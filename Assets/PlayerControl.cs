@@ -45,6 +45,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""da886ba2-27d9-4571-baf9-e04945413497"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -111,6 +120,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Spirit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85fd1bc3-52c3-489b-832d-23bec08f015e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -199,6 +219,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Playermoverment = asset.FindActionMap("Playermoverment", throwIfNotFound: true);
         m_Playermoverment_moverment = m_Playermoverment.FindAction("moverment", throwIfNotFound: true);
         m_Playermoverment_Spirit = m_Playermoverment.FindAction("Spirit", throwIfNotFound: true);
+        m_Playermoverment_Jump = m_Playermoverment.FindAction("Jump", throwIfNotFound: true);
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_block = m_Combat.FindAction("block", throwIfNotFound: true);
@@ -276,12 +297,14 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private List<IPlayermovermentActions> m_PlayermovermentActionsCallbackInterfaces = new List<IPlayermovermentActions>();
     private readonly InputAction m_Playermoverment_moverment;
     private readonly InputAction m_Playermoverment_Spirit;
+    private readonly InputAction m_Playermoverment_Jump;
     public struct PlayermovermentActions
     {
         private @PlayerControl m_Wrapper;
         public PlayermovermentActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @moverment => m_Wrapper.m_Playermoverment_moverment;
         public InputAction @Spirit => m_Wrapper.m_Playermoverment_Spirit;
+        public InputAction @Jump => m_Wrapper.m_Playermoverment_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Playermoverment; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -297,6 +320,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Spirit.started += instance.OnSpirit;
             @Spirit.performed += instance.OnSpirit;
             @Spirit.canceled += instance.OnSpirit;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(IPlayermovermentActions instance)
@@ -307,6 +333,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Spirit.started -= instance.OnSpirit;
             @Spirit.performed -= instance.OnSpirit;
             @Spirit.canceled -= instance.OnSpirit;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(IPlayermovermentActions instance)
@@ -428,6 +457,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     {
         void OnMoverment(InputAction.CallbackContext context);
         void OnSpirit(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
     public interface ICombatActions
     {

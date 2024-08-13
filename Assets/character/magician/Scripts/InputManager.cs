@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public bool isAttack = false;
     public bool isFlame = false;
     public bool isBlock;
+    public bool isJump;
     public bool Spirits { get; private set; }
     private void Awake()
     {
@@ -43,11 +44,12 @@ public class InputManager : MonoBehaviour
                 }
             };
             playerControls.Playermoverment.Spirit.canceled += context => Spirits = false;
-            playerControls.Combat.block.started += context => { isBlock = true;  };
+            playerControls.Combat.block.performed += context => { isBlock = true;  };
             playerControls.Combat.block.canceled += context => isBlock = false;
             playerControls.Combat.NormalAttack.performed += OnAttack;
             playerControls.Other.Cursor.performed += Escap;
             playerControls.Combat.NormalAttack.canceled += context => isFlame = false;
+            playerControls.Playermoverment.Jump.started += context => isJump = true;
         }
         playerControls.Enable();
     }

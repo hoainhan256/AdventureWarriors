@@ -9,38 +9,41 @@ public class blockSkill : CharacterState
         MagicianChar.ShieldObject.SetActive(true);
         MagicianChar.anim.SetBool("Block", true);
         MagicianChar.MoveInfor = 0;
+        Debug.Log("StartBlock");
     }
 
     
     public override void UpdateState()
     {
        
-        MagicianChar.Locomotion.RotateToCamera();
+        MagicianChar.Locomotion.RotateToCamera(MagicianChar.Locomotion.rotationSpeed);
 
-        if(MagicianChar.InputManager.isDodge)
-        {
-            MagicianChar.TransitionToState(MagicianChar.dodgeState);
-        }
-        else if(MagicianChar.InputManager.isAttack) MagicianChar.TransitionToState(MagicianChar.attackState);
-        else if(MagicianChar.InputManager.isFlame) MagicianChar.TransitionToState(MagicianChar.flameState);
-        else if(MagicianChar.InputManager.isBlock == false)
-        {
-            if (MagicianChar.InputManager.isMoving)
-            {
-                MagicianChar.TransitionToState(MagicianChar.moveState);
-            }
-            else
-            {
-                MagicianChar.TransitionToState(MagicianChar.idleState);
-            }
-        }
+        //if(MagicianChar.InputManager.isDodge)
+        //{
+        //    MagicianChar.TransitionToState(MagicianChar.dodgeState);
+        //}
+        //else if(MagicianChar.InputManager.isAttack) MagicianChar.TransitionToState(MagicianChar.attackState);
+        //else if(MagicianChar.InputManager.isFlame) MagicianChar.TransitionToState(MagicianChar.flameState);
+        //else if(MagicianChar.InputManager.isBlock == false)
+        //{
+        //    if (MagicianChar.InputManager.isMoving)
+        //    {
+        //        MagicianChar.TransitionToState(MagicianChar.moveState);
+        //    }
+        //    else
+        //    {
+        //        MagicianChar.TransitionToState(MagicianChar.idleState);
+        //    }
+        //}
     }
     public override void ExitState()
     {
         MagicianChar.ShieldObject.SetActive(false);
         MagicianChar.InputManager.isBlock = false;
-
         MagicianChar.anim.SetBool("Block", false);
     }
-
+    public override bool CanTransition()
+    {
+        return true;
+    }
 }

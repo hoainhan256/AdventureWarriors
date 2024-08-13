@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class CharacterState : ICharacterState
+public abstract class CharacterState 
 {
     protected MagicianChar MagicianChar;
     public CharacterState (MagicianChar magicianChar)
@@ -10,6 +10,7 @@ public abstract class CharacterState : ICharacterState
     public abstract void EnterState();
     public abstract void UpdateState();
     public abstract void ExitState();
+    public abstract bool CanTransition();
 }
 public interface ICharacterState
 {
