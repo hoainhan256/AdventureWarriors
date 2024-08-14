@@ -20,6 +20,7 @@ public class MagicianChar : MonoBehaviour
     public FlameState flameState;
     public MoveAttack moveAttack;
     public JumpState jumpState;
+    public string currentStateString;
     [Header("Infor")]
     public float MoveInfor = 0;
     public float timeDodge = 0;
@@ -56,6 +57,7 @@ public class MagicianChar : MonoBehaviour
         currentState.EnterState();
         FlameFireObject.SetActive(false);
 
+
     }
     private void FixedUpdate()
     {
@@ -66,6 +68,7 @@ public class MagicianChar : MonoBehaviour
     }
     public void TransitionToState(CharacterState newState)
     {
+        currentStateString = currentState.ToString();
         currentState.ExitState();
         currentState = newState;
         currentState.EnterState();
@@ -140,7 +143,7 @@ public class MagicianChar : MonoBehaviour
             {
                 TransitionToState(dodgeState);
             }
-            
+            saveMoveInfor = MoveInfor;
         }
         #endregion
 
@@ -160,6 +163,7 @@ public class MagicianChar : MonoBehaviour
                     TransitionToState(flameState);
                 }
             }
+            saveMoveInfor = Locomotion.moveSpeed;
         }
         #endregion
 
@@ -182,9 +186,10 @@ public class MagicianChar : MonoBehaviour
             }
             else if (currentState == moveState)
             {
-                anim.SetTrigger("isAttack");
+                
                 TransitionToState(moveAttack);
             }
+            saveMoveInfor = MoveInfor;
         }
         #endregion
 
@@ -203,11 +208,13 @@ public class MagicianChar : MonoBehaviour
                 if (currentState.CanTransition())
                 {
                     TransitionToState(moveState);
+                    saveMoveInfor = MoveInfor;
                 }
             }
             if (InputManager.isJump == true)
             {
                 TransitionToState(jumpState);
+                saveMoveInfor = MoveInfor;
             }
         }
         #endregion
@@ -220,9 +227,9 @@ public class MagicianChar : MonoBehaviour
                 Debug.Log((currentState.CanTransition()));
                 TransitionToState(jumpState);
                 InputManager.isJump =false;
-                saveMoveInfor = MoveInfor;
                 
             }
+
             
 
         }
@@ -232,6 +239,7 @@ public class MagicianChar : MonoBehaviour
         #region Ilde State
         else
         {
+            if (currentState == idleState) return;
             if(currentState == attackState || currentState == dodgeState || currentState == flameState || currentState == jumpState)
             {
                 if (currentState.CanTransition()) TransitionToState(idleState);
@@ -241,7 +249,7 @@ public class MagicianChar : MonoBehaviour
             {
                 TransitionToState(idleState);
             }
-            
+           
         }
         #endregion
 

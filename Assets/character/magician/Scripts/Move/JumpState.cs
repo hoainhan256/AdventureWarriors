@@ -18,13 +18,14 @@ public class JumpState : CharacterState
 
     public override void UpdateState()
     {
-        MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
+        
         MagicianChar.anim.SetFloat("timeJump",MagicianChar.timeJumped);
         MagicianChar.anim.SetBool("isGround", !MagicianChar.isGround);
         
         MagicianChar.timeJumped += Time.deltaTime;
-        
-        if(MagicianChar.isGround == false )
+        if(MagicianChar.timeJumped >1f) MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
+
+        if (MagicianChar.isGround == false )
         {
             MagicianChar.InputManager.isJump = false;
         }
@@ -33,10 +34,10 @@ public class JumpState : CharacterState
     {
         MagicianChar.anim.SetBool("isJump", false);
         MagicianChar.anim.SetBool("isGround", false);
-        MagicianChar.saveMoveInfor = 0;
         MagicianChar.InputManager.isJump = false;
         MagicianChar.timeJumped = 0;
         MagicianChar.anim.SetFloat("timeJump", 0);
+        
     }
     public override bool CanTransition()
     {

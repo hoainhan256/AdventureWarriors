@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 public class PlayerLocomotion : MonoBehaviour
 {
     InputManager inputManager;
- 
+    MagicianChar Magician;
     [SerializeField] Vector3 moveDirection;
     public Transform cameraObject { get; private set; }
     public Rigidbody rig;
@@ -19,6 +19,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
+        Magician = GetComponent<MagicianChar>();
         rig = GetComponent<Rigidbody>();
         Cinemachine = transform.GetChild(2).gameObject;
         cameraObject = Camera.main.transform;
@@ -84,14 +85,36 @@ public class PlayerLocomotion : MonoBehaviour
     }
     public void JumpPhysic()
     {
-        Vector3 dir = cameraObject.forward * inputManager.verticalInput;
-        dir = dir  + cameraObject.right * inputManager.horizontalInput;
+        Vector3 dir;
+        if (Magician.saveMoveInfor != 0)
+        {
+            dir = transform.forward;
+        }
+        else
+        {
+            dir = new Vector3();
+        }
+      
         dir.Normalize();
         dir.y = 1;
-        rig.AddForce(dir * JumpForce , ForceMode.Impulse);
+        rig.AddForce(dir * JumpForce * Time.fixedDeltaTime , ForceMode.Impulse);
         inputManager.isJump = false;
-        Debug.Log("Force = " + dir * JumpForce );
-        Debug.Log(" velocity = " +  rig.linearVelocity);
-        Debug.Log(" Jumping ");
+      
+    }
+    public void RotateToInput()
+    {
+        Vector3 targetDirection = Vector3.zero;
+
+        targetDirection = cameraObject.forward * inputManager.verticalInput;
+        targetDirection = targetDirection + cameraObject.right * inputManager.horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0;
+
+        if (targetDirection == Vector3.zero)
+            targetDirection = transform.forward;
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        
+        transform.rotation = targetRotation;
     }
 }

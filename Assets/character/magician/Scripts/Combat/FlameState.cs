@@ -26,20 +26,12 @@ public class FlameState : CharacterState
         }
         if (MagicianChar.InputManager.isDodge) MagicianChar.TransitionToState(MagicianChar.dodgeState);
         
-        //else if (MagicianChar.timeFlame > 3.7f)
-        //{
-        //    if (MagicianChar.InputManager.isBlock) MagicianChar.TransitionToState(MagicianChar.blockState);
-        //    else if (MagicianChar.InputManager.isAttack) MagicianChar.TransitionToState(MagicianChar.attackState);
-        //    else if (MagicianChar.InputManager.isMoving) MagicianChar.TransitionToState(MagicianChar.moveState);
-        //    else
-        //    MagicianChar.TransitionToState(MagicianChar.idleState);
-        //}
+       
         
 
     }
     public override void ExitState()
     {
-
         MagicianChar.FlameFireObject.SetActive(false);
         MagicianChar.InputManager.isFlame = false;
         MagicianChar.anim.SetBool("flameFire", false);

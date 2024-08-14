@@ -6,9 +6,10 @@ public class AttackState : CharacterState
     public override void EnterState()
     {
         MagicianChar.anim.SetLayerWeight(2, 1);
+
+        
         MagicianChar.anim.SetTrigger("isAttack");
         MagicianChar.timeFireBall = 0;
-
     }
     public override void UpdateState()
     {
@@ -38,6 +39,7 @@ public class AttackState : CharacterState
     public override void ExitState()
     {
         MagicianChar.InputManager.isAttack = false;
+        MagicianChar.currentStateString = MagicianChar.currentState.ToString();
     }
     public override bool CanTransition()
     {

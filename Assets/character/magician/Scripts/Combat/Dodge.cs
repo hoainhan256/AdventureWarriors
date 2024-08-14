@@ -7,7 +7,6 @@ public class Dodge : CharacterState
     {
         MagicianChar.InputManager.isDodge = false;
         MagicianChar.anim.SetTrigger("dodge");
-        MagicianChar.MoveInfor = 0;
         MagicianChar.timeDodge = 0;
     }
 
@@ -30,6 +29,7 @@ public class Dodge : CharacterState
         MagicianChar.Locomotion.rig.linearVelocity = Vector3.zero;
        
         MagicianChar.Locomotion.moveSpeed = 3f;
+        
     }
     public override bool CanTransition()
     {

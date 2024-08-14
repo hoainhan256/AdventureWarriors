@@ -7,14 +7,16 @@ public class MoveAttack : CharacterState
     }
     public override void EnterState()
     {
-        MagicianChar.anim.SetLayerWeight(1, 1);
 
         MagicianChar.anim.SetLayerWeight(2, 0);
-
-       
+        MagicianChar.anim.SetLayerWeight(1, 1);
         MagicianChar.Locomotion.moveSpeed = 4f;
         MagicianChar._mSFX.SFX.clip = MagicianChar._mSFX.footStep;
         MagicianChar._mSFX.SFX.Play();
+        if(MagicianChar.currentStateString == MagicianChar.moveState.ToString())
+        {
+            MagicianChar.anim.SetTrigger("isAttack");
+        }
     }
 
     
@@ -80,12 +82,12 @@ public class MoveAttack : CharacterState
 
     public override void ExitState()
     {
-        MagicianChar.anim.SetLayerWeight(1, 0);
         MagicianChar._mSFX.SFX.loop = false;
 
         MagicianChar._mSFX.SFX.Stop();
         MagicianChar.timeFireBall = 0;
-        Debug.Log("Exit move attack");
+       
+       
     }
     public override bool CanTransition()
     {

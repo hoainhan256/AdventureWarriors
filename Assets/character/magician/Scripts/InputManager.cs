@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
                 }
             };
             playerControls.Playermoverment.Spirit.canceled += context => Spirits = false;
-            playerControls.Combat.block.performed += context => { isBlock = true;  };
+            playerControls.Combat.block.started += context => { isBlock = true;  };
             playerControls.Combat.block.canceled += context => isBlock = false;
             playerControls.Combat.NormalAttack.performed += OnAttack;
             playerControls.Other.Cursor.performed += Escap;

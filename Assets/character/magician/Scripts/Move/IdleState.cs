@@ -14,22 +14,7 @@ public class IdleState : CharacterState
     public override void UpdateState()
     {
         
-        //if (MagicianChar.InputManager.isMoving)
-        //{
-        //    MagicianChar.TransitionToState(MagicianChar.moveState);
-            
-        //}
-        //else if (MagicianChar.InputManager.isDodge)
-        //{
-        //    MagicianChar.TransitionToState(MagicianChar.dodgeState);
-        //}
-        //else if(MagicianChar.InputManager.isBlock)
-        //{
-        //    MagicianChar.TransitionToState(MagicianChar.blockState);
-
-        //}
-        //else if(MagicianChar.InputManager.isAttack) MagicianChar.TransitionToState(MagicianChar.attackState);
-        //else if(MagicianChar.InputManager.isFlame) MagicianChar.TransitionToState(MagicianChar.flameState);
+        
         if (MagicianChar.MoveInfor > 0)
         {
             MagicianChar.MoveInfor -= MagicianChar.acceleration * Time.deltaTime;
@@ -40,7 +25,7 @@ public class IdleState : CharacterState
 
     public override void ExitState()
     {
-
+        MagicianChar.saveMoveInfor = 0f;
     }
     public override bool CanTransition()
     {
