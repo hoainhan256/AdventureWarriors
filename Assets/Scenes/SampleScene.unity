@@ -1253,6 +1253,7 @@ MonoBehaviour:
     SFX: {fileID: 0}
     footStep: {fileID: 8300000, guid: 14d75405f3e6ec24c878c9c4acf2c969, type: 3}
     Jumping: {fileID: 0}
+  currentStateString: 
   MoveInfor: 0
   timeDodge: 0
   acceleration: 1.2
