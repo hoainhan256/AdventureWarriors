@@ -8,8 +8,7 @@ public class MoveState : CharacterState
     public MoveState(MagicianChar magicianChar) : base(magicianChar) { }
     public override void EnterState()
     {
-        MagicianChar._mSFX.SFX.clip = MagicianChar._mSFX.footStep;
-        MagicianChar._mSFX.SFX.Play();
+        
         if(MagicianChar.currentStateString == MagicianChar.idleState.ToString())
         {
             MagicianChar.MoveInfor = 0;
@@ -17,12 +16,11 @@ public class MoveState : CharacterState
       
         
             MagicianChar.anim.SetLayerWeight(2, 0);
-        
     }
 
     public override void UpdateState()
     {
-        MagicianChar._mSFX.SFX.loop = true;
+        
        
         
         MagicianChar.Locomotion.HandleAllMoverment();
@@ -67,8 +65,6 @@ public class MoveState : CharacterState
         MagicianChar.anim.SetLayerWeight(1, 0);
         MagicianChar.anim.SetLayerWeight(2,0);
         MagicianChar.Locomotion.moveSpeed =3;
-        MagicianChar._mSFX.SFX.loop = false;
-        MagicianChar._mSFX.SFX.Stop();
         
     }
     public override bool CanTransition()

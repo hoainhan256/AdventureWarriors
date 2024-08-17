@@ -11,9 +11,8 @@ public class MoveAttack : CharacterState
         MagicianChar.anim.SetLayerWeight(2, 0);
         MagicianChar.anim.SetLayerWeight(1, 1);
         MagicianChar.Locomotion.moveSpeed = 4f;
-        MagicianChar._mSFX.SFX.clip = MagicianChar._mSFX.footStep;
-        MagicianChar._mSFX.SFX.Play();
-        if(MagicianChar.currentStateString == MagicianChar.moveState.ToString())
+       
+        if (MagicianChar.currentStateString == MagicianChar.moveState.ToString())
         {
             MagicianChar.anim.SetTrigger("isAttack");
         }
@@ -23,7 +22,7 @@ public class MoveAttack : CharacterState
 
     public override void UpdateState()
     {
-        MagicianChar._mSFX.SFX.loop = true;
+        
         MagicianChar.timeFireBall += 1 * Time.deltaTime;
         MagicianChar.anim.SetFloat("Speed", MagicianChar.MoveInfor);
         MagicianChar.Locomotion.HandleAllMoverment();
@@ -82,9 +81,6 @@ public class MoveAttack : CharacterState
 
     public override void ExitState()
     {
-        MagicianChar._mSFX.SFX.loop = false;
-
-        MagicianChar._mSFX.SFX.Stop();
         MagicianChar.timeFireBall = 0;
        
        

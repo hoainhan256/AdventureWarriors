@@ -62,6 +62,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.1515613
+        functionName: Jumping
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 1c5daaecbcbac144ca40291c427f9aeb, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

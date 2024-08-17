@@ -1,12 +1,15 @@
 using UnityEngine;
-using static UnityEngine.UI.Image;
+[RequireComponent(typeof(SyncSFX))]
+[RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerLocomotion))]
 public class MagicianChar : MonoBehaviour
 {
     [Header("Class")]
     public Animator anim;
     public InputManager InputManager;
     public PlayerLocomotion Locomotion;
-    public SystemSFX _mSFX = new SystemSFX();
+    public SyncSFX syncSFX;
     [Header("Object")]
     public GameObject ShieldObject { get; private set; }
     public GameObject FlameFireObject { get; private set; }
@@ -20,7 +23,10 @@ public class MagicianChar : MonoBehaviour
     public FlameState flameState;
     public MoveAttack moveAttack;
     public JumpState jumpState;
+    public CrouchIdleState crouchIdleState;
+    public CrouchMoveState crouchMoveState;
     public string currentStateString;
+    public string nextStateString;
     [Header("Infor")]
     public float MoveInfor = 0;
     public float timeDodge = 0;
@@ -41,8 +47,8 @@ public class MagicianChar : MonoBehaviour
         Locomotion = GetComponent<PlayerLocomotion>();
         ShieldObject = transform.GetChild(0).gameObject;
         FlameFireObject = transform.GetChild(3).gameObject;
-        _mSFX.SFX = transform.GetChild(5).gameObject.GetComponent<AudioSource>();
-        blockState = new blockSkill(this);
+        syncSFX = GetComponent<SyncSFX>();
+         blockState = new blockSkill(this);
         idleState = new IdleState(this);
         moveState = new MoveState(this);
         dodgeState = new Dodge(this);
@@ -50,6 +56,8 @@ public class MagicianChar : MonoBehaviour
         flameState = new FlameState(this);
         moveAttack = new MoveAttack(this);
         jumpState = new JumpState(this);
+        crouchIdleState = new CrouchIdleState(this);
+        crouchMoveState = new CrouchMoveState(this);
     }
     private void Start()
     {
@@ -68,6 +76,7 @@ public class MagicianChar : MonoBehaviour
     }
     public void TransitionToState(CharacterState newState)
     {
+        nextStateString = newState.ToString();
         currentStateString = currentState.ToString();
         currentState.ExitState();
         currentState = newState;
@@ -108,13 +117,13 @@ public class MagicianChar : MonoBehaviour
 
             #region BlockState
             if (InputManager.isBlock && !InputManager.isAttack && !InputManager.isDodge )
-        {
+            {
+            if (currentState == blockState) return;
             if (currentState == idleState || currentState == moveState )
             {
                 TransitionToState(blockState);
             }
-            else if (currentState == attackState || currentState == dodgeState || currentState == moveAttack || currentState == flameState 
-                || currentState == jumpState)
+            else
             {
                 if (currentState.CanTransition())
                 {
@@ -177,19 +186,19 @@ public class MagicianChar : MonoBehaviour
                 InputManager.isBlock = false;
                 TransitionToState(attackState);
             }
-            else if (currentState == flameState || currentState == dodgeState || currentState == jumpState)
+            else if (currentState == moveState)
+            {
+
+                TransitionToState(moveAttack);
+            }
+            else 
             {
                 if (currentState.CanTransition())
                 {
                     TransitionToState(attackState);
                 }
             }
-            else if (currentState == moveState)
-            {
-                
-                TransitionToState(moveAttack);
-            }
-            saveMoveInfor = MoveInfor;
+            
         }
         #endregion
 
@@ -198,24 +207,24 @@ public class MagicianChar : MonoBehaviour
         #region Move State
         else if (InputManager.isMoving)
         {
+            if (InputManager.isJump == true)
+            {
+                TransitionToState(jumpState);
+            }
+            if (currentState == crouchIdleState || currentState == crouchMoveState || currentState == moveState) return;
              if (currentState == attackState)
             {
                 TransitionToState(moveAttack);
             }
-           else if (currentState == idleState) TransitionToState(moveState);
-            else if (currentState == flameState || currentState == dodgeState || currentState == moveAttack || currentState == jumpState)
+            else if (currentState == idleState) TransitionToState(moveState);
+            else 
             {
                 if (currentState.CanTransition())
                 {
                     TransitionToState(moveState);
-                    saveMoveInfor = MoveInfor;
                 }
             }
-            if (InputManager.isJump == true)
-            {
-                TransitionToState(jumpState);
-                saveMoveInfor = MoveInfor;
-            }
+            
         }
         #endregion
 
@@ -235,21 +244,27 @@ public class MagicianChar : MonoBehaviour
         }
         #endregion
 
+        #region Crouch Ilde State
+        else if (InputManager.isCrouch)
+        {
+            if(currentState == crouchIdleState || currentState == crouchMoveState) return;
+            if (currentState.CanTransition())
+            {
+                TransitionToState(crouchIdleState);
+            }
+        }
+        #endregion
+
+        #region Crouch Move State
+
+        #endregion
 
         #region Ilde State
         else
         {
-            if (currentState == idleState) return;
-            if(currentState == attackState || currentState == dodgeState || currentState == flameState || currentState == jumpState)
-            {
-                if (currentState.CanTransition()) TransitionToState(idleState);
-                
-            }
-            else
-            {
-                TransitionToState(idleState);
-            }
-           
+            if (currentState == idleState) return;     
+            if(currentState == crouchIdleState) return;
+            if (currentState.CanTransition()) TransitionToState(idleState);  
         }
         #endregion
 

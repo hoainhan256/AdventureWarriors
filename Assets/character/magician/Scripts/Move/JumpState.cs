@@ -5,11 +5,11 @@ public class JumpState : CharacterState
     public JumpState(MagicianChar magicianChar) : base(magicianChar)
     {
     }
-    bool Jumped = false;
+    
     public override void EnterState()
     {
        MagicianChar.anim.SetBool("isJump", true);
-        Jumped = false;
+       
         MagicianChar.timeJumped = 0;
         MagicianChar.Locomotion.moveSpeed = 5f;
     }
@@ -23,7 +23,11 @@ public class JumpState : CharacterState
         MagicianChar.anim.SetBool("isGround", !MagicianChar.isGround);
         
         MagicianChar.timeJumped += Time.deltaTime;
-        if(MagicianChar.timeJumped >1f) MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
+       
+        
+           
+        
+         if(MagicianChar.timeJumped >1f) MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
 
         if (MagicianChar.isGround == false )
         {
@@ -37,7 +41,7 @@ public class JumpState : CharacterState
         MagicianChar.InputManager.isJump = false;
         MagicianChar.timeJumped = 0;
         MagicianChar.anim.SetFloat("timeJump", 0);
-        
+
     }
     public override bool CanTransition()
     {

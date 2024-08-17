@@ -94,7 +94,6 @@ public class PlayerLocomotion : MonoBehaviour
         {
             dir = new Vector3();
         }
-      
         dir.Normalize();
         dir.y = 1;
         rig.AddForce(dir * JumpForce * Time.fixedDeltaTime , ForceMode.Impulse);

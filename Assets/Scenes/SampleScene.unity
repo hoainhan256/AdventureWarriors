@@ -988,6 +988,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
       insertIndex: -1
       addedObject: {fileID: 727556836}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 727556838}
     - targetCorrespondingSourceObject: {fileID: 3135921509060577837, guid: 084188ce8eeea14449d52aba492e4e87, type: 3}
       insertIndex: -1
       addedObject: {fileID: 808003959}
@@ -1234,6 +1237,7 @@ MonoBehaviour:
   isFlame: 0
   isBlock: 0
   isJump: 0
+  isCrouch: 0
 --- !u!114 &727556834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,11 +1253,9 @@ MonoBehaviour:
   anim: {fileID: 0}
   InputManager: {fileID: 0}
   Locomotion: {fileID: 0}
-  _mSFX:
-    SFX: {fileID: 0}
-    footStep: {fileID: 8300000, guid: 14d75405f3e6ec24c878c9c4acf2c969, type: 3}
-    Jumping: {fileID: 0}
+  syncSFX: {fileID: 0}
   currentStateString: 
+  nextStateString: 
   MoveInfor: 0
   timeDodge: 0
   acceleration: 1.2
@@ -1288,6 +1290,23 @@ MonoBehaviour:
   rotationSpeed: 10
   isCursorlock: 1
   Cinemachine: {fileID: 0}
+--- !u!114 &727556838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650530325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5daaecbcbac144ca40291c427f9aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SFX:
+    footStep: {fileID: 8300000, guid: 80166d43c15a3ab4ca64017bd89a6e49, type: 3}
+    Jumping: {fileID: 8300000, guid: 609656d7accc7e947b921e3e38293ffc, type: 3}
+    Landing: {fileID: 8300000, guid: f73c23e117187624eb83ab2224b3be11, type: 3}
+  _AudioSFX: {fileID: 0}
 --- !u!1 &801200633
 GameObject:
   m_ObjectHideFlags: 0
