@@ -64,7 +64,11 @@ public class MoveState : CharacterState
     {
         MagicianChar.anim.SetLayerWeight(1, 0);
         MagicianChar.anim.SetLayerWeight(2,0);
-        MagicianChar.Locomotion.moveSpeed =3;
+        if(MagicianChar.nextStateString != MagicianChar.jumpState.ToString())
+        {
+            MagicianChar.Locomotion.moveSpeed = 3;
+        }
+        
         
     }
     public override bool CanTransition()

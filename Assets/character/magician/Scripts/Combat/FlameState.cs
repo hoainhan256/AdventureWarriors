@@ -18,7 +18,7 @@ public class FlameState : CharacterState
 
     public override void UpdateState()
     {
-
+        MagicianChar.Locomotion.RotateToCamera(10);
         MagicianChar.timeFlame += 1 * Time.deltaTime;
         if (MagicianChar.timeFlame > 1f)
         {

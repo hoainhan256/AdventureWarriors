@@ -7,7 +7,7 @@ public class SyncSFX : MonoBehaviour
 
     private void Start()
     {
-        _AudioSFX = transform.GetChild(5).gameObject.GetComponent<AudioSource>();
+
     }
     public void Landing()
     {

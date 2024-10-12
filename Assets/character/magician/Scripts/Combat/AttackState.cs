@@ -8,8 +8,13 @@ public class AttackState : CharacterState
         MagicianChar.anim.SetLayerWeight(2, 1);
 
         
-        MagicianChar.anim.SetTrigger("isAttack");
-        MagicianChar.timeFireBall = 0;
+        
+        if(MagicianChar.currentStateString != MagicianChar.moveAttack.ToString())
+        {
+            MagicianChar.anim.SetTrigger("isAttack");
+            MagicianChar.timeFireBall = 0;
+        }
+        
     }
     public override void UpdateState()
     {
@@ -21,11 +26,11 @@ public class AttackState : CharacterState
             MagicianChar.TransitionToState(MagicianChar.moveAttack);
         }
         
-        if (MagicianChar.timeFireBall < 0.5f)
+        if (MagicianChar.timeFireBall < 0.2f)
         {
             MagicianChar.Locomotion.RotateToCamera(MagicianChar.Locomotion.rotationSpeed * 2 );
         }
-        else if (MagicianChar.timeFireBall > 2f)
+        else if (MagicianChar.timeFireBall >= 1f)
         {
             if (MagicianChar.InputManager.isBlock) MagicianChar.TransitionToState(MagicianChar.blockState);
             else if (MagicianChar.InputManager.isDodge) MagicianChar.TransitionToState(MagicianChar.dodgeState);
@@ -43,7 +48,7 @@ public class AttackState : CharacterState
     }
     public override bool CanTransition()
     {
-        if(MagicianChar.timeFireBall >= 2)
+        if(MagicianChar.timeFireBall >= 1f)
         {
             return true;
         }

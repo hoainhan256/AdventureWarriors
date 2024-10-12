@@ -11,7 +11,6 @@ public class JumpState : CharacterState
        MagicianChar.anim.SetBool("isJump", true);
        
         MagicianChar.timeJumped = 0;
-        MagicianChar.Locomotion.moveSpeed = 5f;
     }
 
    
@@ -45,7 +44,7 @@ public class JumpState : CharacterState
     }
     public override bool CanTransition()
     {
-        if(MagicianChar.timeJumped > 1f)
+        if(MagicianChar.timeJumped > 1.2f)
         {
             return MagicianChar.isGround;
         }

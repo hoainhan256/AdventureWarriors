@@ -42,12 +42,10 @@ public class MagicianChar : MonoBehaviour
     [SerializeField] LayerMask GroundLayer;
     private void Awake()
     {
-        InputManager = GetComponent<InputManager>();
-        anim = GetComponent<Animator>();
-        Locomotion = GetComponent<PlayerLocomotion>();
+        
         ShieldObject = transform.GetChild(0).gameObject;
         FlameFireObject = transform.GetChild(3).gameObject;
-        syncSFX = GetComponent<SyncSFX>();
+        
          blockState = new blockSkill(this);
         idleState = new IdleState(this);
         moveState = new MoveState(this);
@@ -186,7 +184,7 @@ public class MagicianChar : MonoBehaviour
                 InputManager.isBlock = false;
                 TransitionToState(attackState);
             }
-            else if (currentState == moveState)
+            else if (currentState == moveState || currentState == moveAttack)
             {
 
                 TransitionToState(moveAttack);
@@ -212,7 +210,7 @@ public class MagicianChar : MonoBehaviour
                 TransitionToState(jumpState);
             }
             if (currentState == crouchIdleState || currentState == crouchMoveState || currentState == moveState) return;
-             if (currentState == attackState)
+            if (currentState == attackState)
             {
                 TransitionToState(moveAttack);
             }

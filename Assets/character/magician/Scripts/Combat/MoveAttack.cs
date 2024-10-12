@@ -12,9 +12,10 @@ public class MoveAttack : CharacterState
         MagicianChar.anim.SetLayerWeight(1, 1);
         MagicianChar.Locomotion.moveSpeed = 4f;
        
-        if (MagicianChar.currentStateString == MagicianChar.moveState.ToString())
+        if (MagicianChar.currentStateString != MagicianChar.attackState.ToString())
         {
-            MagicianChar.anim.SetTrigger("isAttack");
+            MagicianChar.anim.Play("attack1", 1);
+            MagicianChar.timeFireBall = 0;
         }
     }
 
@@ -25,7 +26,6 @@ public class MoveAttack : CharacterState
         
         MagicianChar.timeFireBall += 1 * Time.deltaTime;
         MagicianChar.anim.SetFloat("Speed", MagicianChar.MoveInfor);
-        MagicianChar.Locomotion.HandleAllMoverment();
         if (!MagicianChar.InputManager.isMoving)
         {
 
@@ -62,7 +62,17 @@ public class MoveAttack : CharacterState
 
             }
         }
-        if (MagicianChar.timeFireBall > 2f)
+        if(MagicianChar.timeFireBall < 0.6f)
+        {
+            MagicianChar.Locomotion.RotateToCamera(10f);
+            MagicianChar.Locomotion.HandleMoverment();
+        }
+        else if(MagicianChar.timeFireBall >= 0.6)
+        {
+
+            MagicianChar.Locomotion.HandleAllMoverment();
+        }
+        else if (MagicianChar.timeFireBall > 1f)
         {
             MagicianChar.InputManager.isAttack = false;
             if (MagicianChar.InputManager.isMoving)
@@ -82,12 +92,16 @@ public class MoveAttack : CharacterState
     public override void ExitState()
     {
         MagicianChar.timeFireBall = 0;
-       
+       if(MagicianChar.nextStateString != MagicianChar.attackState.ToString())
+        {
+            MagicianChar.timeFireBall = 0;
+            MagicianChar.InputManager.isAttack=false;
+        }
        
     }
     public override bool CanTransition()
     {
-        if (MagicianChar.timeFireBall >= 2f) return true;
+        if (MagicianChar.timeFireBall >= 1f) return true;
         else return false;
 
     }
