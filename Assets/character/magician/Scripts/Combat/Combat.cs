@@ -10,7 +10,13 @@ public class Combat : MonoBehaviour
     public MagicianChar magicianChar;
     Ray ray;
     RaycastHit hit;
-
+    private void Awake()
+    {
+        if (objectPool == null)
+        {
+            objectPool = FindFirstObjectByType<ObjectPooling>();
+        }
+    }
     private void Update()
     {
        
@@ -27,7 +33,7 @@ public class Combat : MonoBehaviour
         }
         else
         {
-            destination = ray.GetPoint(1000);
+            destination = ray.GetPoint(100);
         }
         GameObject objPrefab = objectPool.GetObject();
         objPrefab.transform.localPosition = FirePos.transform.position;

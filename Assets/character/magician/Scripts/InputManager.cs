@@ -1,6 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.InputSystem;
+#endif
 public class InputManager : MonoBehaviour
 {
     [Header("Class")]
@@ -9,6 +12,7 @@ public class InputManager : MonoBehaviour
 
     [Header("Input values")]
     public Vector2 moverInput { get; private set; }
+    public Vector2 look;
     public float horizontalInput;
     public float verticalInput;
     public bool isMoving;
@@ -18,6 +22,13 @@ public class InputManager : MonoBehaviour
     public bool isBlock;
     public bool isJump;
     public bool isCrouch;
+    public bool isSprint;
+    public bool isFirstPerson = true;
+    public bool cursorLocked = true;
+    public bool cursorInputForLook = true;
+    [Header("Movement Settings")]
+    public bool analogMovement;
+
     public bool Spirits { get; private set; }
     private void Awake()
     {
@@ -25,6 +36,20 @@ public class InputManager : MonoBehaviour
 
 
     }
+    
+    public void LookInput(Vector2 newLookDirection)
+    {
+        look = newLookDirection;
+    }
+    //private void OnApplicationFocus(bool hasFocus)
+    //{
+    //    SetCursorState(cursorLocked);
+    //}
+
+    //private void SetCursorState(bool newState)
+    //{
+    //    Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+    //}
     private void OnEnable()
     {
         if(playerControls == null)
@@ -44,14 +69,16 @@ public class InputManager : MonoBehaviour
                   
                 }
             };
+            playerControls.Playermoverment.Jump.performed += context => { isJump = true; };
+            playerControls.Playermoverment.Crouch.performed += context => { isCrouch = isCrouch ? false : true; };
             playerControls.Playermoverment.Spirit.canceled += context => Spirits = false;
             playerControls.Combat.block.started += context => { isBlock = true;  };
             playerControls.Combat.block.canceled += context => isBlock = false;
             playerControls.Combat.NormalAttack.performed += OnAttack;
-            playerControls.Other.Cursor.performed += Escap;
             playerControls.Combat.NormalAttack.canceled += context => isFlame = false;
-            playerControls.Playermoverment.Jump.started += context => isJump = true;
-            playerControls.Playermoverment.Crouch.performed += context => { isCrouch = isCrouch ? false : true; };
+            playerControls.Other.Cursor.performed += Escap;
+            playerControls.Other.ChangePerSpective.performed += context => { isFirstPerson = !isFirstPerson; };
+           
         }
         playerControls.Enable();
     }
@@ -80,7 +107,18 @@ public class InputManager : MonoBehaviour
     {
         
     }
-   private void OnAttack (InputAction.CallbackContext context)
+   
+#if ENABLE_INPUT_SYSTEM
+    public void OnLook(InputValue value)
+    {
+        if (cursorInputForLook)
+        {
+            LookInput(value.Get<Vector2>());
+        }
+    }
+ 
+#endif
+    private void OnAttack (InputAction.CallbackContext context)
     {
         if(context.interaction is HoldInteraction)
         {

@@ -11,8 +11,8 @@ public class MagicianChar : MonoBehaviour
     public PlayerLocomotion Locomotion;
     public SyncSFX syncSFX;
     [Header("Object")]
-    public GameObject ShieldObject { get; private set; }
-    public GameObject FlameFireObject { get; private set; }
+    public GameObject ShieldObject;
+    public GameObject FlameFireObject;
     [Header("State..")]
     public CharacterState currentState;
     public blockSkill blockState;
@@ -43,8 +43,7 @@ public class MagicianChar : MonoBehaviour
     private void Awake()
     {
         
-        ShieldObject = transform.GetChild(0).gameObject;
-        FlameFireObject = transform.GetChild(3).gameObject;
+        
         
          blockState = new blockSkill(this);
         idleState = new IdleState(this);
@@ -70,7 +69,7 @@ public class MagicianChar : MonoBehaviour
         InputManager.HandleAllInput();
         currentState.UpdateState();
         MoveInfor = Mathf.Clamp(MoveInfor, 0, 3);
-        Debug.Log("State:"+ currentState.GetType().Name);
+       
     }
     public void TransitionToState(CharacterState newState)
     {
@@ -111,8 +110,6 @@ public class MagicianChar : MonoBehaviour
     void CheckState()
     {
         if (isGround == false) return;
-
-
             #region BlockState
             if (InputManager.isBlock && !InputManager.isAttack && !InputManager.isDodge )
             {
@@ -132,9 +129,6 @@ public class MagicianChar : MonoBehaviour
         }        
         #endregion
 
-
-
-
             #region dodge State
         else if (InputManager.isDodge)
         {
@@ -153,9 +147,6 @@ public class MagicianChar : MonoBehaviour
             saveMoveInfor = MoveInfor;
         }
         #endregion
-
-
-
         #region Flame State
         else if (InputManager.isFlame)
         {
@@ -173,9 +164,6 @@ public class MagicianChar : MonoBehaviour
             saveMoveInfor = Locomotion.moveSpeed;
         }
         #endregion
-
-
-
         #region Attack State
         else if (InputManager.isAttack)
         {
@@ -199,9 +187,6 @@ public class MagicianChar : MonoBehaviour
             
         }
         #endregion
-
-
-
         #region Move State
         else if (InputManager.isMoving)
         {

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20210695575012975}
   - component: {fileID: 7314647935449641219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,8 @@ GameObject:
   - component: {fileID: 316622565928996805}
   - component: {fileID: 7037823541757837553}
   - component: {fileID: -8481788853920848933}
-  m_Layer: 0
+  - component: {fileID: -3002114540901186311}
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,6 +332,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3002114540901186311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795720787573995811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9b091bfa7339b4faa040b01dcbb74d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPool: {fileID: 0}
 --- !u!1 &6309791927709752368
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +356,7 @@ GameObject:
   - component: {fileID: 3060618210445664622}
   - component: {fileID: 4208125742732061361}
   - component: {fileID: 2821227359084443918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: vfxGraph_trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +473,7 @@ GameObject:
   - component: {fileID: 8922377606991363668}
   - component: {fileID: 530987325994409343}
   - component: {fileID: 874971552806204979}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

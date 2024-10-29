@@ -34,5 +34,7 @@ public class ObjectPooling : MonoBehaviour
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+        
     }
+    
 }
