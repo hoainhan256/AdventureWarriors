@@ -5,6 +5,7 @@ public class ObjectPooling : MonoBehaviour
 {
     public GameObject PrefabObject;
     public int PoolSize = 10;
+    [SerializeField]
     private List<GameObject> Pool = new List<GameObject>();
     private void Awake()
     {

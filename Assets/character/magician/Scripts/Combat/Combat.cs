@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Combat : MonoBehaviour
 {
-    public ObjectPooling objectPool;
+    public ObjectPooling TrailobjectPool;
     [SerializeField] Transform FirePos;
     [SerializeField] Vector3 destination;
     [SerializeField] Camera cam;
@@ -12,9 +12,9 @@ public class Combat : MonoBehaviour
     RaycastHit hit;
     private void Awake()
     {
-        if (objectPool == null)
+        if (TrailobjectPool == null)
         {
-            objectPool = FindFirstObjectByType<ObjectPooling>();
+            TrailobjectPool = GameObject.FindGameObjectWithTag("TrailPooling").GetComponent<ObjectPooling>();
         }
     }
     private void Update()
@@ -35,7 +35,7 @@ public class Combat : MonoBehaviour
         {
             destination = ray.GetPoint(100);
         }
-        GameObject objPrefab = objectPool.GetObject();
+        GameObject objPrefab = TrailobjectPool.GetObject();
         objPrefab.transform.localPosition = FirePos.transform.position;
         objPrefab.transform.rotation = Quaternion.identity;
         objPrefab.GetComponent<Rigidbody>().linearVelocity =((destination - FirePos.position ).normalized * Speed) ;

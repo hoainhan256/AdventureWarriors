@@ -6,6 +6,9 @@ TagManager:
   tags:
   - wall
   - CinemachineTarget
+  - ObjectPooling
+  - TrailPooling
+  - TrailExplosionPool
   layers:
   - Default
   - TransparentFX
