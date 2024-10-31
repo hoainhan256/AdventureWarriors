@@ -11,7 +11,7 @@ public class FlameState : CharacterState
         MagicianChar.anim.SetBool("flameFire", true);
         MagicianChar.MoveInfor = 0;
         MagicianChar.timeFlame = 0;
-        
+        MagicianChar.syncSFX.fireFlame();
     }
 
    
@@ -32,6 +32,7 @@ public class FlameState : CharacterState
     }
     public override void ExitState()
     {
+        MagicianChar.syncSFX._AudioSFX.Stop();
         MagicianChar.FlameFireObject.SetActive(false);
         MagicianChar.InputManager.isFlame = false;
         MagicianChar.anim.SetBool("flameFire", false);

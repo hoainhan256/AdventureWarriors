@@ -238,7 +238,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";KeyboardMouse"",
                     ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -266,6 +266,33 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e7f3dc3-6d59-4eb3-867e-5f8a0928d814"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""0040a7e1-8cbb-4111-9453-8f95f9181127"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""bcef72ec-4234-483d-af22-f2266514cab0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -288,6 +315,39 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangePerSpective"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b54b76b-17d3-4488-b8e1-d2872da1fe5e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05384d10-3dd9-4014-8835-e2aac9bda150"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""RotateLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e33ab6ae-f541-4c5e-8d75-8495948a9cbf"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""RotateRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -334,6 +394,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Other = asset.FindActionMap("Other", throwIfNotFound: true);
         m_Other_Cursor = m_Other.FindAction("Cursor", throwIfNotFound: true);
         m_Other_ChangePerSpective = m_Other.FindAction("ChangePerSpective", throwIfNotFound: true);
+        m_Other_interact = m_Other.FindAction("interact", throwIfNotFound: true);
+        m_Other_RotateLeft = m_Other.FindAction("RotateLeft", throwIfNotFound: true);
+        m_Other_RotateRight = m_Other.FindAction("RotateRight", throwIfNotFound: true);
     }
 
     ~@PlayerControl()
@@ -536,12 +599,18 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private List<IOtherActions> m_OtherActionsCallbackInterfaces = new List<IOtherActions>();
     private readonly InputAction m_Other_Cursor;
     private readonly InputAction m_Other_ChangePerSpective;
+    private readonly InputAction m_Other_interact;
+    private readonly InputAction m_Other_RotateLeft;
+    private readonly InputAction m_Other_RotateRight;
     public struct OtherActions
     {
         private @PlayerControl m_Wrapper;
         public OtherActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Cursor => m_Wrapper.m_Other_Cursor;
         public InputAction @ChangePerSpective => m_Wrapper.m_Other_ChangePerSpective;
+        public InputAction @interact => m_Wrapper.m_Other_interact;
+        public InputAction @RotateLeft => m_Wrapper.m_Other_RotateLeft;
+        public InputAction @RotateRight => m_Wrapper.m_Other_RotateRight;
         public InputActionMap Get() { return m_Wrapper.m_Other; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -557,6 +626,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @ChangePerSpective.started += instance.OnChangePerSpective;
             @ChangePerSpective.performed += instance.OnChangePerSpective;
             @ChangePerSpective.canceled += instance.OnChangePerSpective;
+            @interact.started += instance.OnInteract;
+            @interact.performed += instance.OnInteract;
+            @interact.canceled += instance.OnInteract;
+            @RotateLeft.started += instance.OnRotateLeft;
+            @RotateLeft.performed += instance.OnRotateLeft;
+            @RotateLeft.canceled += instance.OnRotateLeft;
+            @RotateRight.started += instance.OnRotateRight;
+            @RotateRight.performed += instance.OnRotateRight;
+            @RotateRight.canceled += instance.OnRotateRight;
         }
 
         private void UnregisterCallbacks(IOtherActions instance)
@@ -567,6 +645,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @ChangePerSpective.started -= instance.OnChangePerSpective;
             @ChangePerSpective.performed -= instance.OnChangePerSpective;
             @ChangePerSpective.canceled -= instance.OnChangePerSpective;
+            @interact.started -= instance.OnInteract;
+            @interact.performed -= instance.OnInteract;
+            @interact.canceled -= instance.OnInteract;
+            @RotateLeft.started -= instance.OnRotateLeft;
+            @RotateLeft.performed -= instance.OnRotateLeft;
+            @RotateLeft.canceled -= instance.OnRotateLeft;
+            @RotateRight.started -= instance.OnRotateRight;
+            @RotateRight.performed -= instance.OnRotateRight;
+            @RotateRight.canceled -= instance.OnRotateRight;
         }
 
         public void RemoveCallbacks(IOtherActions instance)
@@ -619,5 +706,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     {
         void OnCursor(InputAction.CallbackContext context);
         void OnChangePerSpective(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnRotateLeft(InputAction.CallbackContext context);
+        void OnRotateRight(InputAction.CallbackContext context);
     }
 }

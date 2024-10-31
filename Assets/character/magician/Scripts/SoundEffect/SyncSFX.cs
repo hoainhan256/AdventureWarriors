@@ -4,14 +4,19 @@ public class SyncSFX : MonoBehaviour
 {
     public SystemSFX _SFX = new SystemSFX();
     public AudioSource _AudioSFX;
-
+    public AudioSource _moverAudio;
     private void Start()
     {
 
     }
-    public void Landing()
+   public void fireBallAttack()
     {
-        _AudioSFX.clip = _SFX.Landing;
+        _AudioSFX.clip = _SFX.fireBall;
+        _AudioSFX.Play();
+    }
+    public void fireFlame()
+    {
+        _AudioSFX.clip = _SFX.fireFlame_Aud;
         _AudioSFX.Play();
     }
     public void Jumping()
@@ -21,7 +26,11 @@ public class SyncSFX : MonoBehaviour
     }
     public void FootStep()
     {
-        _AudioSFX.clip = _SFX.footStep;
-        _AudioSFX.Play();
+        if(_moverAudio.clip == null)
+        {
+            _moverAudio.clip = _SFX.footStep;
+        }
+       
+        _moverAudio.Play();
     }
 }

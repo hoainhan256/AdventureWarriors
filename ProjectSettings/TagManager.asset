@@ -9,6 +9,8 @@ TagManager:
   - ObjectPooling
   - TrailPooling
   - TrailExplosionPool
+  - Terrain
+  - WhiteObject
   layers:
   - Default
   - TransparentFX

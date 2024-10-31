@@ -17,7 +17,7 @@ public class JumpState : CharacterState
 
     public override void UpdateState()
     {
-        MagicianChar.Locomotion.HandleAllMoverment();
+        
         MagicianChar.anim.SetFloat("timeJump",MagicianChar.timeJumped);
         MagicianChar.anim.SetBool("isGround", !MagicianChar.isGround);
         
@@ -26,7 +26,15 @@ public class JumpState : CharacterState
         
            
         
-         if(MagicianChar.timeJumped >1f) MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
+        if(MagicianChar.timeJumped > 1f)
+        {
+            MagicianChar.anim.SetBool("isJump", MagicianChar.InputManager.isJump);
+        }
+        else
+        {
+            MagicianChar.Locomotion.HandleAllMoverment();
+        }
+            
 
         if (MagicianChar.isGround == false )
         {

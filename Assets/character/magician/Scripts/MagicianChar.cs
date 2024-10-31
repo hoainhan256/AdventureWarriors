@@ -37,6 +37,7 @@ public class MagicianChar : MonoBehaviour
     public float timeJumped;
     public float radiusCheck = 0.2f;
     public float saveMoveInfor;
+    public bool isCombat = false;
     [SerializeField] float transformCheck;
     
     [SerializeField] LayerMask GroundLayer;
@@ -111,8 +112,10 @@ public class MagicianChar : MonoBehaviour
     {
         if (isGround == false) return;
             #region BlockState
-            if (InputManager.isBlock && !InputManager.isAttack && !InputManager.isDodge )
-            {
+           
+          if (InputManager.isBlock && !InputManager.isAttack && !InputManager.isDodge )
+          {
+            if (isCombat == false) return;
             if (currentState == blockState) return;
             if (currentState == idleState || currentState == moveState )
             {
@@ -126,7 +129,7 @@ public class MagicianChar : MonoBehaviour
                 }
             }
            
-        }        
+          }        
         #endregion
 
             #region dodge State
@@ -148,8 +151,10 @@ public class MagicianChar : MonoBehaviour
         }
         #endregion
         #region Flame State
+
         else if (InputManager.isFlame)
         {
+            if (isCombat == false) return;
             if (currentState == idleState || currentState == moveState || currentState == blockState)
             {
                 TransitionToState(flameState);
@@ -167,6 +172,7 @@ public class MagicianChar : MonoBehaviour
         #region Attack State
         else if (InputManager.isAttack)
         {
+            if (isCombat == false) return;
             if (currentState == idleState  || currentState == blockState)
             {
                 InputManager.isBlock = false;

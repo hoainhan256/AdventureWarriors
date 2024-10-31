@@ -1,4 +1,8 @@
 using UnityEngine;
+using System.Collections;
+using System;
+
+
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem.Interactions;
@@ -26,6 +30,9 @@ public class InputManager : MonoBehaviour
     public bool isFirstPerson = true;
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
+    public bool _interact;
+    public bool rotateLeft;
+    public bool rotateRight;
     [Header("Movement Settings")]
     public bool analogMovement;
 
@@ -69,7 +76,7 @@ public class InputManager : MonoBehaviour
                   
                 }
             };
-            playerControls.Playermoverment.Jump.performed += context => { isJump = true; };
+            playerControls.Playermoverment.Jump.performed += context => { StartCoroutine(setFalseVaribleInput(() => isJump = true, () => isJump = false)); };
             playerControls.Playermoverment.Crouch.performed += context => { isCrouch = isCrouch ? false : true; };
             playerControls.Playermoverment.Spirit.canceled += context => Spirits = false;
             playerControls.Combat.block.started += context => { isBlock = true;  };
@@ -78,9 +85,24 @@ public class InputManager : MonoBehaviour
             playerControls.Combat.NormalAttack.canceled += context => isFlame = false;
             playerControls.Other.Cursor.performed += Escap;
             playerControls.Other.ChangePerSpective.performed += context => { isFirstPerson = !isFirstPerson; };
-           
+            playerControls.Other.interact.started += OnInteract => { StartCoroutine(setFalseVaribleInput(() => _interact = true, () => _interact = false)); };
+            playerControls.Other.RotateLeft.started += context => { rotateLeft = true; };
+            playerControls.Other.RotateLeft.canceled += context => { rotateLeft = false; };
+            playerControls.Other.RotateRight.started += context => { rotateRight = true; };
+            playerControls.Other.RotateRight.canceled += context => { rotateRight = false; };
+
+
+
+
         }
         playerControls.Enable();
+    }
+    
+    IEnumerator setFalseVaribleInput(Action setTrue, Action setFalse)
+    {
+        setTrue();
+        yield return null ;
+        setFalse();
     }
     private void OnDisable()
     {
@@ -126,7 +148,7 @@ public class InputManager : MonoBehaviour
         }
         else if(context.interaction is TapInteraction)
         {
-            isAttack = true;
+            StartCoroutine(setFalseVaribleInput(() => isAttack = true, () => isAttack = false));
         }
         
         

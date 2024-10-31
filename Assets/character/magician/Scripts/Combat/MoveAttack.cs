@@ -7,7 +7,10 @@ public class MoveAttack : CharacterState
     }
     public override void EnterState()
     {
-
+        if (!MagicianChar.syncSFX._moverAudio.isPlaying)
+        {
+            MagicianChar.syncSFX._moverAudio.Play();
+        }
         MagicianChar.anim.SetLayerWeight(2, 0);
         MagicianChar.anim.SetLayerWeight(1, 1);
         MagicianChar.Locomotion.moveSpeed = 4f;
@@ -23,7 +26,17 @@ public class MoveAttack : CharacterState
 
     public override void UpdateState()
     {
-        
+        if (MagicianChar.InputManager.Spirits && MagicianChar.syncSFX._moverAudio.clip == MagicianChar.syncSFX._SFX.footStep )
+        {
+            MagicianChar.syncSFX._moverAudio.clip = MagicianChar.syncSFX._SFX.running;
+            MagicianChar.syncSFX._moverAudio.Play();
+        }
+        else if (MagicianChar.syncSFX._moverAudio.clip == MagicianChar.syncSFX._SFX.running && MagicianChar.InputManager.Spirits == false)
+        {
+            MagicianChar.syncSFX._moverAudio.clip = MagicianChar.syncSFX._SFX.footStep;
+            MagicianChar.syncSFX._moverAudio.Play();
+          
+        }
         MagicianChar.timeFireBall += 1 * Time.deltaTime;
         MagicianChar.anim.SetFloat("Speed", MagicianChar.MoveInfor);
         if (!MagicianChar.InputManager.isMoving)
@@ -97,7 +110,10 @@ public class MoveAttack : CharacterState
             MagicianChar.timeFireBall = 0;
             MagicianChar.InputManager.isAttack=false;
         }
-       
+        if (MagicianChar.nextStateString != MagicianChar.moveState.ToString())
+        {
+            MagicianChar.syncSFX._moverAudio.Stop();
+        }
     }
     public override bool CanTransition()
     {
