@@ -35,6 +35,7 @@ public class InputManager : MonoBehaviour
     public bool rotateRight;
     [Header("Movement Settings")]
     public bool analogMovement;
+    public bool isCombat = false;
 
     public bool Spirits { get; private set; }
     private void Awake()
@@ -85,7 +86,8 @@ public class InputManager : MonoBehaviour
             playerControls.Combat.NormalAttack.canceled += context => isFlame = false;
             playerControls.Other.Cursor.performed += Escap;
             playerControls.Other.ChangePerSpective.performed += context => { isFirstPerson = !isFirstPerson; };
-            playerControls.Other.interact.started += OnInteract => { StartCoroutine(setFalseVaribleInput(() => _interact = true, () => _interact = false)); };
+            playerControls.Other.interact.started += OnInteract => { _interact = true; };
+            playerControls.Other.interact.canceled += OnInteract => { _interact = false; };
             playerControls.Other.RotateLeft.started += context => { rotateLeft = true; };
             playerControls.Other.RotateLeft.canceled += context => { rotateLeft = false; };
             playerControls.Other.RotateRight.started += context => { rotateRight = true; };
@@ -127,7 +129,7 @@ public class InputManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        if(cursorInputForLook == false) look = Vector2.zero;
     }
    
 #if ENABLE_INPUT_SYSTEM
@@ -136,6 +138,10 @@ public class InputManager : MonoBehaviour
         if (cursorInputForLook)
         {
             LookInput(value.Get<Vector2>());
+        }
+        else
+        {
+            return;
         }
     }
  

@@ -293,6 +293,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""changeBool"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1eea05a-596c-4ea5-8e2d-0f96a91a9d29"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -321,7 +330,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1b54b76b-17d3-4488-b8e1-d2872da1fe5e"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
@@ -348,6 +357,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
                     ""action"": ""RotateRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7d2fd5c-058f-449e-8f03-82f510c50b7b"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""changeBool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -397,6 +417,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Other_interact = m_Other.FindAction("interact", throwIfNotFound: true);
         m_Other_RotateLeft = m_Other.FindAction("RotateLeft", throwIfNotFound: true);
         m_Other_RotateRight = m_Other.FindAction("RotateRight", throwIfNotFound: true);
+        m_Other_changeBool = m_Other.FindAction("changeBool", throwIfNotFound: true);
     }
 
     ~@PlayerControl()
@@ -602,6 +623,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Other_interact;
     private readonly InputAction m_Other_RotateLeft;
     private readonly InputAction m_Other_RotateRight;
+    private readonly InputAction m_Other_changeBool;
     public struct OtherActions
     {
         private @PlayerControl m_Wrapper;
@@ -611,6 +633,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @interact => m_Wrapper.m_Other_interact;
         public InputAction @RotateLeft => m_Wrapper.m_Other_RotateLeft;
         public InputAction @RotateRight => m_Wrapper.m_Other_RotateRight;
+        public InputAction @changeBool => m_Wrapper.m_Other_changeBool;
         public InputActionMap Get() { return m_Wrapper.m_Other; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -635,6 +658,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @RotateRight.started += instance.OnRotateRight;
             @RotateRight.performed += instance.OnRotateRight;
             @RotateRight.canceled += instance.OnRotateRight;
+            @changeBool.started += instance.OnChangeBool;
+            @changeBool.performed += instance.OnChangeBool;
+            @changeBool.canceled += instance.OnChangeBool;
         }
 
         private void UnregisterCallbacks(IOtherActions instance)
@@ -654,6 +680,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @RotateRight.started -= instance.OnRotateRight;
             @RotateRight.performed -= instance.OnRotateRight;
             @RotateRight.canceled -= instance.OnRotateRight;
+            @changeBool.started -= instance.OnChangeBool;
+            @changeBool.performed -= instance.OnChangeBool;
+            @changeBool.canceled -= instance.OnChangeBool;
         }
 
         public void RemoveCallbacks(IOtherActions instance)
@@ -709,5 +738,6 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnRotateLeft(InputAction.CallbackContext context);
         void OnRotateRight(InputAction.CallbackContext context);
+        void OnChangeBool(InputAction.CallbackContext context);
     }
 }

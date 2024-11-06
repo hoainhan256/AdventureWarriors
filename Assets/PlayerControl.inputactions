@@ -271,6 +271,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "changeBool",
+                    "type": "Button",
+                    "id": "d1eea05a-596c-4ea5-8e2d-0f96a91a9d29",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -299,7 +308,7 @@
                 {
                     "name": "",
                     "id": "1b54b76b-17d3-4488-b8e1-d2872da1fe5e",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
@@ -326,6 +335,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7d2fd5c-058f-449e-8f03-82f510c50b7b",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "changeBool",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

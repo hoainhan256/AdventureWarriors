@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02844878f46c1f4882a2c3b819528e1, type: 3}
+  m_Name: wallCorner
+  m_EditorClassIdentifier: 
+  PreviewPrefab: {fileID: 3927160322418201227, guid: 9e1c85465cd4a8c42a9cf8dac1fc1edb, type: 3}
+  BuildingElementPrefab: {fileID: 100000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
+  buildingItem:
+    nameItems: Wall
+    description: A wooden wall blocking enemy attacks.
+    buttonBackground: {fileID: 0}
+    buttonIcon: {fileID: 21300000, guid: 728772e942196ed45824fac747a931ef, type: 3}

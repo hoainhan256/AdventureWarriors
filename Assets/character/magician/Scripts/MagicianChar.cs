@@ -37,7 +37,7 @@ public class MagicianChar : MonoBehaviour
     public float timeJumped;
     public float radiusCheck = 0.2f;
     public float saveMoveInfor;
-    public bool isCombat = false;
+   
     [SerializeField] float transformCheck;
     
     [SerializeField] LayerMask GroundLayer;
@@ -57,6 +57,7 @@ public class MagicianChar : MonoBehaviour
         crouchIdleState = new CrouchIdleState(this);
         crouchMoveState = new CrouchMoveState(this);
     }
+    
     private void Start()
     {
         currentState = idleState;
@@ -106,6 +107,10 @@ public class MagicianChar : MonoBehaviour
         CheckState();
         isGround = Physics.CheckSphere(transform.position, radiusCheck, GroundLayer);
         DebugDrawSphere(transform.position, radiusCheck, Color.red);
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+           InputManager.isCombat = !InputManager.isCombat;
+        }
 
     }
     void CheckState()
@@ -115,7 +120,7 @@ public class MagicianChar : MonoBehaviour
            
           if (InputManager.isBlock && !InputManager.isAttack && !InputManager.isDodge )
           {
-            if (isCombat == false) return;
+            if (InputManager.isCombat == false) return;
             if (currentState == blockState) return;
             if (currentState == idleState || currentState == moveState )
             {
@@ -150,11 +155,11 @@ public class MagicianChar : MonoBehaviour
             saveMoveInfor = MoveInfor;
         }
         #endregion
-        #region Flame State
+            #region Flame State
 
         else if (InputManager.isFlame)
         {
-            if (isCombat == false) return;
+            if (InputManager.isCombat == false) return;
             if (currentState == idleState || currentState == moveState || currentState == blockState)
             {
                 TransitionToState(flameState);
@@ -172,7 +177,7 @@ public class MagicianChar : MonoBehaviour
         #region Attack State
         else if (InputManager.isAttack)
         {
-            if (isCombat == false) return;
+            if (InputManager.isCombat == false) return;
             if (currentState == idleState  || currentState == blockState)
             {
                 InputManager.isBlock = false;

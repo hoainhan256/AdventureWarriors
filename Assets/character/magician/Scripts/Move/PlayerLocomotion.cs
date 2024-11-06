@@ -50,8 +50,7 @@ public class PlayerLocomotion : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
         _playerInput = GetComponent<PlayerInput>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
     }
    
     public void HandleAllMoverment()

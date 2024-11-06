@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingSystem : MonoBehaviour
@@ -14,13 +16,15 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] float speedRotate = 1f;
     [Header("class")]
     [SerializeField] InputManager input;
+    [Header("Item")]
+    public List<BuildingComponents> itemsBuilding = new List<BuildingComponents>();
+
     private void Awake()
     {
         input = FindFirstObjectByType<InputManager>();
     }
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -30,15 +34,18 @@ public class BuildingSystem : MonoBehaviour
         if (placeNow)
         {
             SendRay();
+            input.isCombat = false;
         }
+        else if(!placeNow && !input._interact)
+        {
+            input.isCombat = true;
+        }
+        
         if (place_Wall_Corner)
         {
             objectToPlace = wall_Corner;
         }
-        if (input._interact)
-        {
-            PlaceWallCorner();
-        }
+        
         #endregion
         #region Rotate
         if(input.rotateLeft)
@@ -61,6 +68,7 @@ public class BuildingSystem : MonoBehaviour
     }
     public void SendRay()
     {
+        if (!placeNow) return;
         if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit))
         {
             place = new Vector3(_hit.point.x,_hit.point.y,_hit.point.z);
@@ -68,8 +76,9 @@ public class BuildingSystem : MonoBehaviour
             {
                 if(tempObjectExist == false)
                 {
-                    Instantiate(tempCorner, place, Quaternion.identity);
-                    tempObject = GameObject.Find("wall_Corner_White(Clone)");
+                  GameObject tempObj = Instantiate(tempCorner, place, Quaternion.identity);
+                    //tempObject = GameObject.Find("wall_Corner_White(Clone)");
+                    tempObject = tempObj;
                     tempObjectExist = true;
                 }
                 
@@ -77,14 +86,18 @@ public class BuildingSystem : MonoBehaviour
                 {
                     tempObject.transform.position = place;
                 }
+
             }
-            if (input.isAttack)
+            if (input.isAttack && input._interact == false && objectToPlace != null )
             {
                 Instantiate(objectToPlace, tempObject.transform.position, tempObject.transform.rotation);
                 placeNow = false;
                 place_Wall_Corner = false;
                 Destroy(tempObject);
                 tempObjectExist = false;
+                objectToPlace = null;
+                
+
             }
             if (input.isBlock)
             {
@@ -92,12 +105,16 @@ public class BuildingSystem : MonoBehaviour
                 place_Wall_Corner = false;
                 Destroy(tempObject);
                 tempObjectExist = false;
+               objectToPlace = null;
+                
             }
         }
     }
-    public void PlaceWallCorner()
+    public void PlaceWallCorner(int value)
     {
-        placeNow=true;
+        wall_Corner = itemsBuilding[value].BuildingElementPrefab;
+        tempCorner = itemsBuilding[value].PreviewPrefab;
+        placeNow =true;
         place_Wall_Corner = true;
     }
 }
